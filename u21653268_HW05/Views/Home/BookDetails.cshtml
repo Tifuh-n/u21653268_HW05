@@ -1,0 +1,75 @@
+﻿@model u21653268_HW05.Models.BorrowedBookVM
+@{
+    ViewBag.Title = "BookDetails";
+}
+
+@{ 
+    var numBorrows = 0;
+    foreach(var borrow in Model.BorrowedBooks)
+    {
+        numBorrows++;
+    }
+}
+
+<br />
+<div>
+    <h2>
+        @Model.BookObj.BookName
+        @if (Model.BookObj.Status == "Available")
+        {
+            <span class="text-success"> - Book @Model.BookObj.Status</span>
+        }
+        else
+        {
+            <span class="text-danger"> - Book @Model.BookObj.Status</span>
+        }
+    </h2>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <h3># Borrows - @numBorrows</h3>
+        </div>
+        <div class="col-md-4 offset-md-4 text-right">
+            @Html.ActionLink("View Students", "Students", "Home", new { BookID = Model.BookID }, htmlAttributes: new { @class = "btn btn-primary btn-sm" })
+        </div>
+    </div>
+
+    <hr />
+
+    <table class="table" width="100%" align="center">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Taken Date</th>
+                <th scope="col">Brought Date</th>
+                <th scope="col">Borrowed By</th>
+        
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var book in Model.BorrowedBooks)
+            {
+                <tr>
+                    <td>
+                        @book.BorrowID
+                    </td>
+                    <td>
+                        @book.TakenDate
+                    </td>
+                    <td>
+                        @book.BroughtDate
+                    </td>
+                    <td>
+                        @book.StudentFullName
+                    </td>
+                 
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+</div>
+
+

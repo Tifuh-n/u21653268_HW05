@@ -1,0 +1,87 @@
+﻿@model u21653268_HW05.Models.StudentClassVM
+@{
+    ViewBag.Title = "Student";
+}
+<br />
+<div>
+    <h2>Students</h2>
+    <hr />
+
+    @using (Html.BeginForm())
+    {
+        <div class="form-row">
+            <input type="text" class="form-control form-control-sm col-md-3" name="StudentName" placeholder="Search Student Name" />
+
+            <div class="col-md-3">
+                <select name="ClassName" class="form-control form-control-sm">
+                    <option selected disabled value="">Select a Class</option>
+                    @foreach (var studentClass in Model.Classes)
+                    {
+                        <option value="@studentClass.ClassName">@studentClass.ClassName</option>
+                    }
+                </select>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-row">
+                    <button type="submit" class="btn btn-success col btn-sm mr-1">Search</button>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                @Html.ActionLink("Clear", "Students", "Home", new { BookID = Model.BookID }, htmlAttributes: new { @class = "btn btn-danger btn-sm col" })
+            </div>
+        </div>
+    }
+    <hr/>
+
+    <table class="table" width="100%" align="center">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Surname</th>
+                <th scope="col">Class</th>
+                <th scope="col">Points</th>
+                <th scope="col">Borrow Book</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var student in Model.Students)
+            {
+            <tr>
+                <td>
+                    @student.StudentID
+                </td>
+                <td>
+                    @student.StudentName
+                </td>
+                <td>
+                    @student.StudentSurname
+                </td>
+                <td>
+                    @student.Class
+                </td>
+                <td>
+                    @student.Point
+                </td>
+                @if (student.BorrowStatus == "Borrow")
+                {
+                    <td>
+                        @Html.ActionLink("Borrow Book", "Borrow", "Home", new { StudentId = student.StudentID, BookID = Model.BookID }, htmlAttributes: new { @class = "btn btn-primary btn-sm" })
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        @Html.ActionLink("Return Book", "Return", "Home", new { BorrowID = Model.BorrowID}, htmlAttributes: new { @class = "btn btn-warning btn-sm" })
+                    </td>
+                }
+
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
